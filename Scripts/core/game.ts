@@ -9,7 +9,7 @@ import PerspectiveCamera = THREE.PerspectiveCamera;
 import BoxGeometry = THREE.BoxGeometry;
 import CubeGeometry = THREE.CubeGeometry;
 import PlaneGeometry = THREE.PlaneGeometry;
-import SphereGeometry = THREE.SphereGeometry;
+
 import Geometry = THREE.Geometry;
 import AxisHelper = THREE.AxisHelper;
 import LambertMaterial = THREE.MeshLambertMaterial;
@@ -41,6 +41,26 @@ var game = (() => {
     var control: Control;
     var gui: GUI;
     var stats: Stats;
+    var plane: Mesh;
+    var cube1: Mesh;
+    var cube2: Mesh;
+    var cube3: Mesh;
+    var cube4: Mesh;
+    var cube5: Mesh;
+    var cubeGeometry1: CubeGeometry;
+    var cubeGeometry2: CubeGeometry;
+    var cubeGeometry3: CubeGeometry;
+    var cubeGeometry4: CubeGeometry;
+    var cubeGeometry5: CubeGeometry;
+    var axes: AxisHelper;
+    var ambientLight: AmbientLight;
+    var spotLight: SpotLight;
+    var cubeMaterial1: LambertMaterial;
+    var cubeMaterial2: LambertMaterial;
+    var cubeMaterial3: LambertMaterial;
+    var cubeMaterial4: LambertMaterial;
+    var cubeMaterial5: LambertMaterial;
+
 
     function init() {
         // Instantiate a new Scene object
@@ -52,11 +72,83 @@ var game = (() => {
 
 
         /* ENTER CODE HERE */
-        
+        //Add a Plane to the Scene
+        plane = new gameObject(
+            new PlaneGeometry(16, 16, 1, 1),
+            new LambertMaterial({ color: 0xf4a460 }),
+            0, 0, 0);
+        plane.rotation.x = -0.5 * Math.PI;
+        plane.name = "ground";
+        scene.add(plane);
+        console.log("Added Plane Primitive to scene...");
+
+        cubeMaterial1 = new LambertMaterial({ color: 0xffff00 });
+        cubeMaterial2 = new LambertMaterial({ color: 0xff00ff });
+        cubeMaterial3 = new LambertMaterial({ color: 0x00ffff });
+        cubeMaterial4 = new LambertMaterial({ color: 0xff0000 });
+        cubeMaterial5 = new LambertMaterial({ color: 0x0000ff });
+
+        cubeGeometry1 = new CubeGeometry(6, 2, 6);
+        cube1 = new Mesh(cubeGeometry1, cubeMaterial1);
+        cube1.castShadow = true;
+        cube1.receiveShadow = true;
+        cube1.position.set(0, 1, 0);
+        scene.add(cube1);
+
+        cubeGeometry2 = new CubeGeometry(4.6, 2, 4.6);
+        cube2 = new Mesh(cubeGeometry2, cubeMaterial2);
+        cube2.castShadow = true;
+        cube2.receiveShadow = true;
+        cube2.position.set(0, 3, 0);
+        scene.add(cube2);
+
+        cubeGeometry3 = new CubeGeometry(3.4, 2, 3.4);
+        cube3 = new Mesh(cubeGeometry3, cubeMaterial3);
+        cube3.castShadow = true;
+        cube3.receiveShadow = true;
+        cube3.position.set(0, 5, 0);
+        scene.add(cube3);
+
+        cubeGeometry4 = new CubeGeometry(2.2, 1.2, 2.2);
+        cube4 = new Mesh(cubeGeometry4, cubeMaterial4);
+        cube4.castShadow = true;
+        cube4.receiveShadow = true;
+        cube4.position.set(0, 6.6, 0);
+        scene.add(cube4);
+
+        cubeGeometry5 = new CubeGeometry(1.4, 0.6, 1.4);
+        cube5 = new Mesh(cubeGeometry5, cubeMaterial5);
+        cube5.castShadow = true;
+        cube5.receiveShadow = true;
+        cube5.position.set(0, 7.5, 0);
+        scene.add(cube5);
+
+        axes = new AxisHelper(20);
+        plane.add(axes);
+        console.log("Added Axis Helper to scene...");
+ 
+        // Add an AmbientLight to the scene
+        // ambientLight = new AmbientLight(0xffffff);
+        // scene.add(ambientLight);
+        // console.log("Added an Ambient Light to Scene");
+
+        spotLight = new SpotLight(0xffffff);
+        spotLight.position.set(5.6, 23.1, 5.4);
+        spotLight.rotation.set(-0.8, 42.7, 19.5);
+        spotLight.intensity = 3;
+        spotLight.angle = 60 * (Math.PI / 180);
+        spotLight.distance = 200;
+        spotLight.castShadow = true;
+        spotLight.shadowCameraNear = 1;
+        spotLight.shadowMapHeight = 2048;
+        spotLight.shadowMapWidth = 2048;
+        scene.add(spotLight);
+        console.log("Added a SpotLight Light to Scene");
+ 
  
         // add controls
         gui = new GUI();
-        control = new Control();
+        control = new Control(0);
         addControl(control);
 
         // Add framerate stats
@@ -69,7 +161,11 @@ var game = (() => {
     }
 
     function addControl(controlObject: Control): void {
-        /* ENTER CODE for the GUI CONTROL HERE */
+        gui.add(controlObject, 'rotationSpeed1', -0.5, 0.5);
+        gui.add(controlObject, 'rotationSpeed2', -0.5, 0.5);
+        gui.add(controlObject, 'rotationSpeed3', -0.5, 0.5);
+        gui.add(controlObject, 'rotationSpeed4', -0.5, 0.5);
+        gui.add(controlObject, 'rotationSpeed5', -0.5, 0.5);
     }
 
     function addStatsObject() {
@@ -85,6 +181,11 @@ var game = (() => {
     function gameLoop(): void {
         stats.update();
         
+        cube1.rotation.y += control.rotationSpeed1;
+        cube2.rotation.y += control.rotationSpeed2;
+        cube3.rotation.y += control.rotationSpeed3;
+        cube4.rotation.y += control.rotationSpeed4;
+        cube5.rotation.y += control.rotationSpeed5;
         // render using requestAnimationFrame
         requestAnimationFrame(gameLoop);
 	
