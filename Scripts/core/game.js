@@ -66,41 +66,48 @@ var game = (function () {
         plane.name = "ground";
         scene.add(plane);
         console.log("Added Plane Primitive to scene...");
+        //Cube Materials for all the cube
         cubeMaterial1 = new LambertMaterial({ color: 0xffff00 });
         cubeMaterial2 = new LambertMaterial({ color: 0xff00ff });
         cubeMaterial3 = new LambertMaterial({ color: 0x00ffff });
         cubeMaterial4 = new LambertMaterial({ color: 0xff0000 });
         cubeMaterial5 = new LambertMaterial({ color: 0x0000ff });
+        //Added the bottom cube
         cubeGeometry1 = new CubeGeometry(6, 2, 6);
         cube1 = new Mesh(cubeGeometry1, cubeMaterial1);
         cube1.castShadow = true;
         cube1.receiveShadow = true;
         cube1.position.set(0, 1, 0);
         scene.add(cube1);
+        //Added the 2nd last cube
         cubeGeometry2 = new CubeGeometry(4.6, 2, 4.6);
         cube2 = new Mesh(cubeGeometry2, cubeMaterial2);
         cube2.castShadow = true;
         cube2.receiveShadow = true;
         cube2.position.set(0, 3, 0);
         scene.add(cube2);
+        //Added the third cube
         cubeGeometry3 = new CubeGeometry(3.4, 2, 3.4);
         cube3 = new Mesh(cubeGeometry3, cubeMaterial3);
         cube3.castShadow = true;
         cube3.receiveShadow = true;
         cube3.position.set(0, 5, 0);
         scene.add(cube3);
+        //Added the second cube
         cubeGeometry4 = new CubeGeometry(2.2, 1.2, 2.2);
         cube4 = new Mesh(cubeGeometry4, cubeMaterial4);
         cube4.castShadow = true;
         cube4.receiveShadow = true;
         cube4.position.set(0, 6.6, 0);
         scene.add(cube4);
+        //Added the 1st cube
         cubeGeometry5 = new CubeGeometry(1.4, 0.6, 1.4);
         cube5 = new Mesh(cubeGeometry5, cubeMaterial5);
         cube5.castShadow = true;
         cube5.receiveShadow = true;
         cube5.position.set(0, 7.5, 0);
         scene.add(cube5);
+        //Added axis helper
         axes = new AxisHelper(20);
         plane.add(axes);
         console.log("Added Axis Helper to scene...");
@@ -108,12 +115,13 @@ var game = (function () {
         // ambientLight = new AmbientLight(0xffffff);
         // scene.add(ambientLight);
         // console.log("Added an Ambient Light to Scene");
+        //Adding the spotlight
         spotLight = new SpotLight(0xffffff);
         spotLight.position.set(5.6, 23.1, 5.4);
         spotLight.rotation.set(-0.8, 42.7, 19.5);
-        spotLight.intensity = 3;
+        spotLight.intensity = 2.5;
         spotLight.angle = 60 * (Math.PI / 180);
-        spotLight.distance = 200;
+        spotLight.distance = 150;
         spotLight.castShadow = true;
         spotLight.shadowCameraNear = 1;
         spotLight.shadowMapHeight = 2048;
@@ -130,6 +138,7 @@ var game = (function () {
         document.body.appendChild(renderer.domElement);
         gameLoop(); // render the scene	
     }
+    //Adding control
     function addControl(controlObject) {
         gui.add(controlObject, 'rotationSpeed1', -0.5, 0.5);
         gui.add(controlObject, 'rotationSpeed2', -0.5, 0.5);
@@ -148,6 +157,7 @@ var game = (function () {
     // Setup main game loop
     function gameLoop() {
         stats.update();
+        //Adding cube rotation
         cube1.rotation.y += control.rotationSpeed1;
         cube2.rotation.y += control.rotationSpeed2;
         cube3.rotation.y += control.rotationSpeed3;
