@@ -13,6 +13,7 @@ import PlaneGeometry = THREE.PlaneGeometry;
 import Geometry = THREE.Geometry;
 import AxisHelper = THREE.AxisHelper;
 import LambertMaterial = THREE.MeshLambertMaterial;
+import PhongMaterial = THREE.MeshPhongMaterial;
 import MeshBasicMaterial = THREE.MeshBasicMaterial;
 import Material = THREE.Material;
 import Mesh = THREE.Mesh;
@@ -55,11 +56,11 @@ var game = (() => {
     var axes: AxisHelper;
     var ambientLight: AmbientLight;
     var spotLight: SpotLight;
-    var cubeMaterial1: LambertMaterial;
-    var cubeMaterial2: LambertMaterial;
-    var cubeMaterial3: LambertMaterial;
-    var cubeMaterial4: LambertMaterial;
-    var cubeMaterial5: LambertMaterial;
+    var cubeMaterial1: PhongMaterial;
+    var cubeMaterial2: PhongMaterial;
+    var cubeMaterial3: PhongMaterial;
+    var cubeMaterial4: PhongMaterial;
+    var cubeMaterial5: PhongMaterial;
 
 
     function init() {
@@ -70,25 +71,27 @@ var game = (() => {
 	
         setupCamera(); // setup the camera
 
-
+        var sandTexture = THREE.ImageUtils.loadTexture('Scripts/texture/sand.jpg')
+        
         /* ENTER CODE HERE */
         //Add a Plane to the Scene
         plane = new gameObject(
             new PlaneGeometry(16, 16, 1, 1),
-            new LambertMaterial({ color: 0xf4a460 }),
+            new PhongMaterial({ map: sandTexture, bumpMap: sandTexture, bumpScale: 0.05 }),
             0, 0, 0);
         plane.rotation.x = -0.5 * Math.PI;
         plane.name = "ground";
         scene.add(plane);
         console.log("Added Plane Primitive to scene...");
 
+        var texture = THREE.ImageUtils.loadTexture('Scripts/texture/bricks.jpg');
 
         //Cube Materials for all the cube
-        cubeMaterial1 = new LambertMaterial({ color: 0xffff00 });
-        cubeMaterial2 = new LambertMaterial({ color: 0xff00ff });
-        cubeMaterial3 = new LambertMaterial({ color: 0x00ffff });
-        cubeMaterial4 = new LambertMaterial({ color: 0xff0000 });
-        cubeMaterial5 = new LambertMaterial({ color: 0x0000ff });
+        cubeMaterial1 = new PhongMaterial({ map: texture, bumpMap: texture, bumpScale: 0.05 });
+        cubeMaterial2 = new PhongMaterial({ map: texture, bumpMap: texture, bumpScale: 0.05 });
+        cubeMaterial3 = new PhongMaterial({ map: texture, bumpMap: texture, bumpScale: 0.05 });
+        cubeMaterial4 = new PhongMaterial({ map: texture, bumpMap: texture, bumpScale: 0.05 });
+        cubeMaterial5 = new PhongMaterial({ map: texture, bumpMap: texture, bumpScale: 0.05 });
 
         //Added the bottom cube
         cubeGeometry1 = new CubeGeometry(6, 2, 6);
@@ -145,9 +148,9 @@ var game = (() => {
         spotLight = new SpotLight(0xffffff);
         spotLight.position.set(5.6, 23.1, 5.4);
         spotLight.rotation.set(-0.8, 42.7, 19.5);
-        spotLight.intensity = 2.5;
+        spotLight.intensity = 3;
         spotLight.angle = 60 * (Math.PI / 180);
-        spotLight.distance = 150;
+        spotLight.distance = 200;
         spotLight.castShadow = true;
         spotLight.shadowCameraNear = 1;
         spotLight.shadowMapHeight = 2048;
@@ -219,9 +222,10 @@ var game = (() => {
     // Setup main camera for the scene
     function setupCamera(): void {
         camera = new PerspectiveCamera(35, config.Screen.RATIO, 0.1, 100);
-        camera.position.x = 15.3;
-        camera.position.y = 18.5;
-        camera.position.z = -28.7;
+        // camera.position.x = 13.3;
+        // camera.position.y = 15.5;
+        // camera.position.z = 23.7;
+        camera.position.set(22.5, 15.75, 16.4);
         camera.rotation.set(-1.10305, 0.49742, -0.1396);
         camera.lookAt(new Vector3(0, 0, 0));
         console.log("Finished setting up Camera...");
