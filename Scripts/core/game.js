@@ -115,9 +115,9 @@ var game = (function () {
         plane.add(axes);
         console.log("Added Axis Helper to scene...");
         // Add an AmbientLight to the scene
-        // ambientLight = new AmbientLight(0xffffff);
-        // scene.add(ambientLight);
-        // console.log("Added an Ambient Light to Scene");
+        ambientLight = new AmbientLight(0x11111);
+        scene.add(ambientLight);
+        console.log("Added an Ambient Light to Scene");
         //Adding the spotlight
         spotLight = new SpotLight(0xffffff);
         spotLight.position.set(5.6, 23.1, 5.4);
