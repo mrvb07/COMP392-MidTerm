@@ -70,7 +70,8 @@ var game = (() => {
         setupRenderer(); // setup the default renderer
 	
         setupCamera(); // setup the camera
-
+        
+        //Getting the texture for plane
         var sandTexture = THREE.ImageUtils.loadTexture('Scripts/texture/sand.jpg')
         
         /* ENTER CODE HERE */
@@ -84,6 +85,7 @@ var game = (() => {
         scene.add(plane);
         console.log("Added Plane Primitive to scene...");
 
+        //Getting the texture for all the Cubes(The Tower)
         var texture = THREE.ImageUtils.loadTexture('Scripts/texture/bricks.jpg');
 
         //Cube Materials for all the cube
